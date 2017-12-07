@@ -4,8 +4,10 @@ const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const keys = require('./config/keys');
-require('./models/User');
+require('./models/User'); // User Model
+require('./models/Survey'); // Survey Model
 require('./services/passport');
+// Routes
 const authRoutes = require('./routes/authRoutes');
 const billingRoutes = require('./routes/billingRoutes');
 
@@ -24,8 +26,12 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-authRoutes(app);
-billingRoutes(app);
+// authRoutes(app);
+require('./routes/authRoutes')(app);
+// billingRoutes(app);
+require('./routes/billingRoutes')(app);
+// surveyRoutes(app);
+require('./routes/surveyRoutes')(app);
 
 // Only run in Production
 if (process.env.NODE_ENV === 'production') {
